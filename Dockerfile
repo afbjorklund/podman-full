@@ -84,12 +84,12 @@ COPY ./podman /go/src/github.com/containers/podman
 WORKDIR /go/src/github.com/containers/podman
 
 FROM build-base AS build-minimal
-RUN PREFIX=/out make binaries install.bin
+RUN DESTDIR=/out make binaries install.bin
 
 FROM build-base AS build-full
 ARG TARGETARCH
 ENV GOARCH=${TARGETARCH}
-RUN PREFIX=/out make binaries docs install
+RUN DESTDIR=/out make binaries docs install
 ARG CONMON_VERSION
 COPY --from=build-conmon /out/${TARGETARCH:-amd64}/* /out/bin/
 RUN ln /out/libexec/podman/conmon /out/bin/conmon
