@@ -18,7 +18,6 @@
 # Basic deps
 ARG CONMON_VERSION=v2.1.10
 ARG CRUN_VERSION=1.14
-ARG CNI_PLUGINS_VERSION=v1.4.0
 
 # Extra deps
 ARG CATATONIT_VERSION=v0.1.7
@@ -96,12 +95,6 @@ COPY --from=build-conmon /out/${TARGETARCH:-amd64}/* /out/bin/
 RUN ln /out/libexec/podman/conmon /out/bin/conmon
 ARG CRUN_VERSION
 COPY --from=build-crun /out/${TARGETARCH:-amd64}/* /out/bin/
-ARG CNI_PLUGINS_VERSION
-RUN fname="cni-plugins-${TARGETOS:-linux}-${TARGETARCH:-amd64}-${CNI_PLUGINS_VERSION}.tgz" && \
-  curl -o "${fname}" -fSL "https://github.com/containernetworking/plugins/releases/download/${CNI_PLUGINS_VERSION}/${fname}" && \
-  mkdir -p /out/libexec/cni && \
-  tar xzf "${fname}" -C /out/libexec/cni && \
-  rm -f "${fname}"
 ARG CATATONIT_VERSION
 COPY --from=build-catatonit /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 

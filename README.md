@@ -4,7 +4,7 @@ Build script for building <https://github.com/containers/podman>
 * conmon
 * crun
 
-* cni-plugins
+* netavark
 * catatonit
 
 ----
