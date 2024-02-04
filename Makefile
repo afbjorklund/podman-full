@@ -1,5 +1,5 @@
 
-PODMAN = podman
+DOCKER = podman
 
 BRANCH = v4.9.0
 
@@ -11,12 +11,12 @@ podman:
 	git clone https://github.com/containers/podman.git --branch=$(BRANCH)
 
 build: podman
-	$(PODMAN) build -t podman-full --build-arg TARGETARCH=$(TARGETARCH) .
+	$(DOCKER) build -t podman-full --build-arg TARGETARCH=$(TARGETARCH) .
 
 archive: podman-full-$(TARGETARCH).tar
 
 podman-full-$(TARGETARCH).tar:
-	$(PODMAN) image inspect podman-full >/dev/null
-	ctr=`$(PODMAN) create podman-full :`; \
-	$(PODMAN) export $$ctr --output=$@ && \
-	$(PODMAN) rm $$ctr
+	$(DOCKER) image inspect podman-full >/dev/null
+	ctr=`$(DOCKER) create podman-full :`; \
+	$(DOCKER) export $$ctr --output=$@ && \
+	$(DOCKER) rm $$ctr
