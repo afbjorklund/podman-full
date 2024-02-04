@@ -78,6 +78,8 @@ RUN autoreconf -fi && ./configure && make && \
   cp -v -a catatonit /out/$TARGETARCH
 
 FROM build-base-debian AS build-base
+RUN apt-get update && \
+  apt-get install -y man-db
 RUN xx-apt-get update && \
   xx-apt-get install -y libgpgme-dev libsystemd-dev
 COPY ./podman /go/src/github.com/containers/podman
