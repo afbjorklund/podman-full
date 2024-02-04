@@ -89,7 +89,8 @@ RUN DESTDIR=/out make binaries install.bin
 FROM build-base AS build-full
 ARG TARGETARCH
 ENV GOARCH=${TARGETARCH}
-RUN DESTDIR=/out make binaries docs install
+RUN DESTDIR=/out make binaries docs install && \
+  mv /out/usr/local/* /out && rmdir /out/usr/local /out/usr
 ARG CONMON_VERSION
 COPY --from=build-conmon /out/${TARGETARCH:-amd64}/* /out/bin/
 RUN ln /out/libexec/podman/conmon /out/bin/conmon
