@@ -3,7 +3,11 @@ DOCKER = podman
 
 BRANCH = v4.9.0
 
+VERSION = 4.9.0
+
 TARGETARCH ?= amd64
+
+ARCHIVE = podman-full-$(VERSION)-linux-$(TARGETARCH)
 
 all: build archive
 
@@ -13,10 +17,13 @@ podman:
 build: podman
 	$(DOCKER) build -t podman-full --build-arg TARGETARCH=$(TARGETARCH) .
 
-archive: podman-full-$(TARGETARCH).tar
+archive: $(ARCHIVE).tar.gz
 
-podman-full-$(TARGETARCH).tar:
+$(ARCHIVE).tar:
 	$(DOCKER) image inspect podman-full >/dev/null
 	ctr=`$(DOCKER) create podman-full :`; \
 	$(DOCKER) export $$ctr --output=$@ && \
 	$(DOCKER) rm $$ctr
+
+$(ARCHIVE).tar.gz: $(ARCHIVE).tar
+	gzip -9 <$< >$@
