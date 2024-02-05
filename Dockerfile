@@ -44,7 +44,6 @@ RUN xx-apt-get update && \
 
 FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bullseye AS build-rust-debian
 COPY --from=xx / /
-ENV DEBIAN_FRONTEND=noninteractive
 ARG TARGETARCH
 
 FROM build-base-debian AS build-conmon
