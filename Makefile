@@ -5,7 +5,7 @@ BRANCH = v4.9
 
 VERSION = 4.9.2
 
-TARGETARCH ?= amd64
+TARGETARCH ?= $(shell ./host-arch.sh)
 
 ARCHIVE = podman-full-$(VERSION)-linux-$(TARGETARCH)
 
