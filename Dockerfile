@@ -18,12 +18,15 @@
 # Basic deps
 ARG CONMON_VERSION=v2.1.10
 ARG CRUN_VERSION=1.14
+ARG NETAVARK_VERSION=v1.10.2
 
 # Extra deps
 ARG CATATONIT_VERSION=v0.1.7
+ARG AARDVARK_DNS_VERSION=v1.10.0
 
 # Test deps
 ARG GO_VERSION=1.21
+ARG RUST_VERSION=1.75
 
 FROM --platform=$BUILDPLATFORM tonistiigi/xx:1.3.0 AS xx
 
@@ -38,6 +41,13 @@ ARG TARGETARCH
 # libseccomp: for runc
 RUN xx-apt-get update && \
   xx-apt-get install -y binutils gcc libc6-dev libbtrfs-dev libseccomp-dev
+
+FROM --platform=$BUILDPLATFORM rust:${RUST_VERSION}-bullseye AS build-rust-debian
+COPY --from=xx / /
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+  apt-get install -y git pkg-config dpkg-dev
+ARG TARGETARCH
 
 FROM build-base-debian AS build-conmon
 ARG CONMON_VERSION
@@ -71,6 +81,18 @@ RUN git checkout ${CRUN_VERSION} && \
 RUN ./autogen.sh && ./configure && make && \
   cp -v -a crun /out/$TARGETARCH
 
+FROM build-rust-debian AS build-netavark
+ARG NETAVARK_VERSION
+ARG TARGETARCH
+RUN apt-get update && \
+  apt-get install -y protobuf-compiler
+RUN git clone https://github.com/containers/netavark.git /go/src/github.com/containers/netavark
+WORKDIR /go/src/github.com/containers/netavark
+RUN git checkout ${NETAVARK_VERSION} && \
+  mkdir -p /out /out/$TARGETARCH
+RUN make && \
+  cp -a bin/netavark /out/$TARGETARCH
+
 FROM build-base-debian AS build-catatonit
 ARG CATATONIT_VERSION
 ARG TARGETARCH
@@ -82,6 +104,16 @@ RUN git checkout ${CATATONIT_VERSION} && \
   mkdir -p /out /out/$TARGETARCH
 RUN autoreconf -fi && ./configure && make && \
   cp -v -a catatonit /out/$TARGETARCH
+
+FROM build-rust-debian AS build-aardvark-dns
+ARG AARDVARK_DNS_VERSION
+ARG TARGETARCH
+RUN git clone https://github.com/containers/aardvark-dns.git /go/src/github.com/containers/aardvark-dns
+WORKDIR /go/src/github.com/containers/aardvark-dns
+RUN git checkout ${AARDVARK_DNS_VERSION} && \
+  mkdir -p /out /out/$TARGETARCH
+RUN make && \
+  cp -a bin/aardvark-dns /out/$TARGETARCH
 
 FROM build-base-debian AS build-base
 RUN apt-get update && \
@@ -104,8 +136,12 @@ COPY --from=build-conmon /out/${TARGETARCH:-amd64}/* /out/bin/
 RUN ln /out/bin/conmon /out/libexec/podman/conmon
 ARG CRUN_VERSION
 COPY --from=build-crun /out/${TARGETARCH:-amd64}/* /out/bin/
+ARG NETAVARK_VERSION
+COPY --from=build-netavark /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 ARG CATATONIT_VERSION
 COPY --from=build-catatonit /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
+ARG AARDVARK_DNS_VERSION
+COPY --from=build-aardvark-dns /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 
 RUN chown -R 0:0 /out
 
