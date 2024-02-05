@@ -28,10 +28,10 @@ ARG AARDVARK_DNS_VERSION=v1.10.0
 ARG GO_VERSION=1.21
 ARG RUST_VERSION=1.75
 
-FROM --platform=$BUILDPLATFORM tonistiigi/xx:1.3.0 AS xx
+FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.3.0 AS xx
 
 
-FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-bullseye AS build-base-debian
+FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-bullseye AS build-base-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -42,7 +42,7 @@ ARG TARGETARCH
 RUN xx-apt-get update && \
   xx-apt-get install -y binutils gcc libc6-dev libbtrfs-dev libseccomp-dev
 
-FROM --platform=$BUILDPLATFORM rust:${RUST_VERSION}-bullseye AS build-rust-debian
+FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bullseye AS build-rust-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
 ARG TARGETARCH
