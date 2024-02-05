@@ -95,7 +95,7 @@ RUN DESTDIR=/out make binaries docs install && \
   mv /out/usr/local/* /out && rmdir /out/usr/local /out/usr
 ARG CONMON_VERSION
 COPY --from=build-conmon /out/${TARGETARCH:-amd64}/* /out/bin/
-RUN ln /out/libexec/podman/conmon /out/bin/conmon
+RUN ln /out/bin/conmon /out/libexec/podman/conmon
 ARG CRUN_VERSION
 COPY --from=build-crun /out/${TARGETARCH:-amd64}/* /out/bin/
 ARG CATATONIT_VERSION
