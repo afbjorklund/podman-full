@@ -29,7 +29,9 @@ lib/tmpfiles.d/
 lib/tmpfiles.d/podman.conf
 libexec/
 libexec/podman/
+libexec/podman/aardvark-dns
 libexec/podman/catatonit
 libexec/podman/conmon
+libexec/podman/netavark
 libexec/podman/quadlet
 libexec/podman/rootlessport
