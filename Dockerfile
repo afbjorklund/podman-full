@@ -45,8 +45,6 @@ RUN xx-apt-get update && \
 FROM --platform=$BUILDPLATFORM rust:${RUST_VERSION}-bullseye AS build-rust-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
-  apt-get install -y git pkg-config dpkg-dev
 ARG TARGETARCH
 
 FROM build-base-debian AS build-conmon
