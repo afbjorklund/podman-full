@@ -7,6 +7,10 @@ Build script for building <https://github.com/containers/podman>
 * netavark
 * catatonit
 
+Installed files for `podman-full`, excluding documentation:
+
+* [podman-files.txt](./podman-files.txt)
+
 ----
 
 Build script adapted from <https://github.com/containerd/nerdctl>
@@ -16,3 +20,7 @@ Build script adapted from <https://github.com/containerd/nerdctl>
 
 * cni-plugins
 * tini
+
+Installed files for `nerdctl-full`, excluding documentation:
+
+* [nerdctl-files.txt](./nerdctl-files.txt)
