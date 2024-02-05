@@ -1,9 +1,9 @@
 
 DOCKER = podman
 
-BRANCH = v4.9.0
+BRANCH = v4.9
 
-VERSION = 4.9.0
+VERSION = 4.9.2
 
 TARGETARCH ?= amd64
 
