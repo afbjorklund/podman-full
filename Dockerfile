@@ -45,6 +45,7 @@ RUN xx-apt-get update && \
 FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bullseye AS build-rust-debian
 COPY --from=xx / /
 ARG TARGETARCH
+ADD rust-jobs.sh /usr/local/bin/rust-jobs
 
 FROM build-base-debian AS build-conmon
 ARG CONMON_VERSION
@@ -87,7 +88,7 @@ RUN git clone https://github.com/containers/netavark.git /go/src/github.com/cont
 WORKDIR /go/src/github.com/containers/netavark
 RUN git checkout ${NETAVARK_VERSION} && \
   mkdir -p /out /out/$TARGETARCH
-RUN make && \
+RUN CARGO_BUILD_JOBS=`rust-jobs` make && \
   cp -a bin/netavark /out/$TARGETARCH
 
 FROM build-base-debian AS build-catatonit
@@ -109,7 +110,7 @@ RUN git clone https://github.com/containers/aardvark-dns.git /go/src/github.com/
 WORKDIR /go/src/github.com/containers/aardvark-dns
 RUN git checkout ${AARDVARK_DNS_VERSION} && \
   mkdir -p /out /out/$TARGETARCH
-RUN make && \
+RUN CARGO_BUILD_JOBS=`rust-jobs` make && \
   cp -a bin/aardvark-dns /out/$TARGETARCH
 
 FROM build-base-debian AS build-base
