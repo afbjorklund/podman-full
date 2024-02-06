@@ -35,6 +35,6 @@ You can set which engine to use, with the `DOCKER` variable.
 
 ## Installation
 
-Normally in lima, the archive is just extracted on the lima:
+Normally in [lima](https://lima-vm.io), the archive is just extracted on the lima:
 
 `sudo tar Cxzf /usr/local nerdctl-full.tgz`
