@@ -51,7 +51,7 @@ FROM build-base-debian AS build-conmon
 ARG CONMON_VERSION
 ARG TARGETARCH
 RUN xx-apt-get update && \
-  xx-apt-get install -y libglib2.0-dev
+  xx-apt-get install -y libglib2.0-dev libsystemd-dev
 RUN git clone https://github.com/containers/conmon.git /go/src/github.com/containers/conmon
 WORKDIR /go/src/github.com/containers/conmon
 RUN git checkout ${CONMON_VERSION} && \
