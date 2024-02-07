@@ -44,7 +44,7 @@ Normally in [lima](https://lima-vm.io), the archive is just extracted on the lim
 You are required to add a `/etc/containers/registries.conf`.
 
 ```
-Error: short-name "alpine" did not resolve to an alias and no containers-registries.conf(5) was found
+Error: [...] no containers-registries.conf(5) was found
 ```
 
 As well as `/etc/containers/policy.json` configuration file.
