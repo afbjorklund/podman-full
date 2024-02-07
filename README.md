@@ -58,3 +58,25 @@ As well as `/etc/containers/policy.json` configuration file.
 ```
 Error: open /etc/containers/policy.json: no such file or directory
 ```
+
+## User Session
+
+Need to make sure to have `newuidmap` and a dbus session.
+
+```
+exec: "newuidmap": executable file not found in $PATH
+```
+```
+WARN[0000] The cgroupv2 manager is set to systemd
+           but there is no systemd user session available
+WARN[0000] Falling back to --cgroup-manager=cgroupfs
+```
+
+They are available as packages, but needs to be started.
+
+```
+sudo apt-get install -y uidmap dbus-user-session
+```
+```
+systemctl --user enable --now dbus
+```
