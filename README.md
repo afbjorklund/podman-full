@@ -81,7 +81,7 @@ sudo apt-get install -y uidmap dbus-user-session
 systemctl --user enable --now dbus
 ```
 
-### Networking
+## Networking
 
 Need to install `slirp4netns`, for network namespaces.
 
