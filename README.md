@@ -39,6 +39,12 @@ Normally in [lima](https://lima-vm.io), the archive is just extracted on the lim
 
 `sudo tar Cxzf /usr/local nerdctl-full.tgz`
 
+## Dependencies
+
+Some dependencies are required, with `sudo apt install`.
+
+* [dependencies.txt](./dependencies.txt)
+
 ## Configuration
 
 You are required to add a `/etc/containers/registries.conf`.
