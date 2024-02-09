@@ -1,9 +1,9 @@
 
 DOCKER = podman
 
-BRANCH = v4.9
+BRANCH = main
 
-VERSION = 4.9.2
+VERSION = 5.0.0-rc1
 
 TARGETARCH ?= $(shell ./host-arch.sh)
 
