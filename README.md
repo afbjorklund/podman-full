@@ -59,6 +59,21 @@ As well as `/etc/containers/policy.json` configuration file.
 Error: open /etc/containers/policy.json: no such file or directory
 ```
 
+### Shortnames
+
+
+You might also want to add a `shortnames.conf` configuration:
+
+`/etc/containers/registries.conf.d/000-shortnames.conf`
+
+Otherwise you will get an interactive question, such as:
+
+```
+? Please select an image:
+  ▸ docker.io/library/alpine:latest
+    quay.io/alpine:latest
+```
+
 ### User Session
 
 Need to make sure to have `newuidmap` and a dbus session.
