@@ -39,13 +39,13 @@ Normally in [lima](https://lima-vm.io), the archive is just extracted on the lim
 
 `sudo tar Cxzf /usr/local nerdctl-full.tgz`
 
-## Dependencies
+### Dependencies
 
 Some dependencies are required, with `sudo apt install`.
 
 * [dependencies.txt](./dependencies.txt)
 
-## Configuration
+### Configuration
 
 You are required to add a `/etc/containers/registries.conf`.
 
@@ -59,7 +59,7 @@ As well as `/etc/containers/policy.json` configuration file.
 Error: open /etc/containers/policy.json: no such file or directory
 ```
 
-## User Session
+### User Session
 
 Need to make sure to have `newuidmap` and a dbus session.
 
@@ -83,7 +83,7 @@ sudo apt-get install -y uidmap dbus-user-session
 systemctl --user enable --now dbus
 ```
 
-## Networking
+### Networking
 
 Need to install `iptables`, for network namespaces.
 
