@@ -59,6 +59,8 @@ As well as `/etc/containers/policy.json` configuration file.
 Error: open /etc/containers/policy.json: no such file or directory
 ```
 
+* <https://github.com/containers/common>
+
 ### Shortnames
 
 
@@ -73,6 +75,8 @@ Otherwise you will get an interactive question, such as:
   ▸ docker.io/library/alpine:latest
     quay.io/alpine:latest
 ```
+
+* <https://github.com/containers/shortnames>
 
 ### User Session
 
