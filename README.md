@@ -25,7 +25,7 @@ Installed files for `nerdctl-full`, excluding documentation:
 
 * [nerdctl-files.txt](./nerdctl-files.txt)
 
------
+----
 
 ## Building
 
@@ -66,6 +66,7 @@ Need to make sure to have `newuidmap` and a dbus session.
 ```
 exec: "newuidmap": executable file not found in $PATH
 ```
+
 ```
 WARN[0000] The cgroupv2 manager is set to systemd
            but there is no systemd user session available
@@ -77,6 +78,7 @@ They are available as packages, but needs to be started.
 ```
 sudo apt-get install -y uidmap dbus-user-session
 ```
+
 ```
 systemctl --user enable --now dbus
 ```
