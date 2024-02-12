@@ -94,3 +94,35 @@ It is available as a deb package, since the old podman.
 ```
 sudo apt-get install -y iptables slirp4netns
 ```
+
+## Testing
+
+Template based on `debian`:
+
+* [lima.yaml](./lima.yaml)
+
+Assuming that lima is installed, and archive is built:
+
+```shell
+mkdir -p /tmp/lima
+cp policy.json registries.conf podman-full-4.9.2-linux-amd64.tar.gz /tmp/lima
+limactl start ./lima.yaml
+export LIMA_INSTANCE=lima
+
+lima sudo mkdir /etc/containers
+lima sudo cp /tmp/lima/policy.json /tmp/lima/registries.conf /etc/containers
+lima sudo tar Cxzf /usr/local /tmp/lima/podman-full-4.9.2-linux-amd64.tar.gz
+lima systemctl --user enable --now podman.socket
+```
+
+After that, you can add forwarding of the `podman.sock`:
+
+```yaml
+portForwards:
+- guestSocket: "/run/user/{{.UID}}/podman/podman.sock"
+  hostSocket: "{{.Dir}}/sock/podman.sock"
+```
+
+You can also run it locally:
+
+`lima podman version`

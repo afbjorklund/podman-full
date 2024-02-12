@@ -1,0 +1,40 @@
+# This template requires Lima v0.7.0 or later
+images:
+- location: "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
+  arch: "x86_64"
+- location: "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-arm64.qcow2"
+  arch: "aarch64"
+
+mounts:
+- location: "~"
+- location: "/tmp/lima"
+  writable: true
+containerd:
+  system: false
+  user: false
+provision:
+# dependencies
+- mode: system
+  script: |
+    #!/bin/bash
+    set -eux -o pipefail
+    command -v slirp4netns >/dev/null 2>&1 && exit 0
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get install -y libseccomp2 libglib2.0-0 libsystemd0 libcap2 libyajl2 libgpgme11
+    apt-get install -y uidmap dbus-user-session iptables slirp4netns
+# user session
+- mode: user
+  script: |
+    #!/bin/bash
+    set -eux -o pipefail
+    test -e $HOME/.config/containers/containers.conf && exit 0
+    systemctl --user start dbus
+    mkdir -p $HOME/.config/containers
+    cat <<EOF >$HOME/.config/containers/containers.conf
+    [containers]
+    #log_driver = "journald"
+    log_driver = "k8s-file"
+    [network]
+    network_backend = "netavark"
+    network_config_dir = "$HOME/.local/share/containers/storage/networks"
+    EOF
