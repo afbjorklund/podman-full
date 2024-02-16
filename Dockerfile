@@ -88,8 +88,8 @@ RUN git clone https://github.com/containers/netavark.git /go/src/github.com/cont
 WORKDIR /go/src/github.com/containers/netavark
 RUN git checkout ${NETAVARK_VERSION} && \
   mkdir -p /out /out/$TARGETARCH
-RUN CARGO_BUILD_JOBS=`rust-jobs` make && \
-  cp -a bin/netavark /out/$TARGETARCH
+RUN CARGO_BUILD_JOBS=`rust-jobs` DESTDIR=/out make build install && \
+  mv /out/usr/local/* /out && rmdir /out/usr/local /out/usr
 
 FROM build-base-debian AS build-catatonit
 ARG CATATONIT_VERSION

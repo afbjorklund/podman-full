@@ -7,6 +7,9 @@ bin/podmansh
 lib/
 lib/systemd/
 lib/systemd/system/
+lib/systemd/system/netavark-dhcp-proxy.socket
+lib/systemd/system/netavark-dhcp-proxy.service
+lib/systemd/system/netavark-firewalld-reload.service
 lib/systemd/system/podman-auto-update.service
 lib/systemd/system/podman-auto-update.timer
 lib/systemd/system/podman-clean-transient.service
