@@ -83,7 +83,7 @@ FROM build-rust-debian AS build-netavark
 ARG NETAVARK_VERSION
 ARG TARGETARCH
 RUN apt-get update && \
-  apt-get install -y protobuf-compiler
+  apt-get install -y protobuf-compiler go-md2man
 RUN git clone https://github.com/containers/netavark.git /go/src/github.com/containers/netavark
 WORKDIR /go/src/github.com/containers/netavark
 RUN git checkout ${NETAVARK_VERSION} && \
