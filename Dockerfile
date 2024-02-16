@@ -129,17 +129,25 @@ ARG TARGETARCH
 ENV GOARCH=${TARGETARCH}
 RUN DESTDIR=/out make binaries docs install && \
   mv /out/usr/local/* /out && rmdir /out/usr/local /out/usr
+RUN mkdir -p /out/share/doc/podman-full && \
+  echo "# podman (full distribution)" > /out/share/doc/podman-full/README.md && \
+  echo "- podman: $(cd /go/src/github.com/containers/podman && git describe --tags)" >> /out/share/doc/podman-full/README.md
 ARG CONMON_VERSION
 COPY --from=build-conmon /out/${TARGETARCH:-amd64}/* /out/bin/
 RUN ln /out/bin/conmon /out/libexec/podman/conmon
+RUN echo "- conmon: ${CONMON_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG CRUN_VERSION
 COPY --from=build-crun /out/${TARGETARCH:-amd64}/* /out/bin/
+RUN echo "- crun: ${CRUN_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG NETAVARK_VERSION
 COPY --from=build-netavark /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
+RUN echo "- netavark: ${NETAVARK_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG CATATONIT_VERSION
 COPY --from=build-catatonit /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
+RUN echo "- catatonit: ${CATATONIT_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG AARDVARK_DNS_VERSION
 COPY --from=build-aardvark-dns /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
+RUN echo "- aardvark-dns: ${AARDVARK_DNS_VERSION}" >> /out/share/doc/podman-full/README.md
 
 RUN chown -R 0:0 /out
 
