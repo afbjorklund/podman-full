@@ -15,6 +15,7 @@ podman:
 	git clone https://github.com/containers/podman.git --branch=$(BRANCH)
 
 build: podman
+	-git -C podman fetch origin $(BRANCH)
 	git -C podman checkout v$(VERSION)
 	$(DOCKER) build -t podman-full --build-arg TARGETARCH=$(TARGETARCH) .
 
