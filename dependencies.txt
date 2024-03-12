@@ -4,4 +4,3 @@ libsystemd0
 libcap2
 libyajl2
 libgpgme11
-libslirp0
