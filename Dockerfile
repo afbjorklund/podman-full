@@ -21,6 +21,7 @@ ARG CRUN_VERSION=1.14
 ARG NETAVARK_VERSION=v1.10.2
 
 # Extra deps
+ARG SLIRP4NETNS_VERSION=v1.2.2
 ARG CATATONIT_VERSION=v0.1.7
 ARG AARDVARK_DNS_VERSION=v1.10.0
 
@@ -91,6 +92,20 @@ RUN git checkout ${NETAVARK_VERSION} && \
 RUN CARGO_BUILD_JOBS=`rust-jobs` make && \
   cp -a bin/netavark /out/$TARGETARCH
 
+FROM build-base-debian AS build-slirp4netns
+ARG SLIRP4NETNS_VERSION
+ARG TARGETARCH
+RUN apt-get update && \
+  apt-get install -y autoconf automake libtool
+RUN xx-apt-get update && \
+  xx-apt-get install -y libglib2.0-dev libslirp-dev libcap-dev libseccomp-dev
+RUN git clone https://github.com/rootless-containers/slirp4netns.git /go/src/github.com/rootless-containers/slirp4netns
+WORKDIR /go/src/github.com/rootless-containers/slirp4netns
+RUN git checkout ${SLIRP4NETNS_VERSION} && \
+  mkdir -p /out /out/$TARGETARCH
+RUN ./autogen.sh && ./configure && make && \
+  cp -v -a slirp4netns /out/$TARGETARCH
+
 FROM build-base-debian AS build-catatonit
 ARG CATATONIT_VERSION
 ARG TARGETARCH
@@ -136,6 +151,8 @@ ARG CRUN_VERSION
 COPY --from=build-crun /out/${TARGETARCH:-amd64}/* /out/bin/
 ARG NETAVARK_VERSION
 COPY --from=build-netavark /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
+ARG SLIRP4NETNS_VERSION
+COPY --from=build-slirp4netns /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 ARG CATATONIT_VERSION
 COPY --from=build-catatonit /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 ARG AARDVARK_DNS_VERSION
