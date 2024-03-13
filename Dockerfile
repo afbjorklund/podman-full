@@ -101,7 +101,7 @@ WORKDIR /go/src/passt.top/passt
 RUN git checkout ${PASST_VERSION} && \
   mkdir -p /out /out/$TARGETARCH
 RUN make && \
-  cp -v -a pasta /out/$TARGETARCH
+  cp -v -a passt pasta /out/$TARGETARCH
 
 FROM build-base-debian AS build-catatonit
 ARG CATATONIT_VERSION
