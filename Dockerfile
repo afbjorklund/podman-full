@@ -156,7 +156,6 @@ COPY --from=build-netavark /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 RUN echo "- netavark: ${NETAVARK_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG PASST_VERSION
 COPY --from=build-passt /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
-RUN rm /out/libexec/podman/pasta && ln -s passt /out/libexec/podman/pasta
 RUN echo "- passt: ${PASST_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG CATATONIT_VERSION
 COPY --from=build-catatonit /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
