@@ -18,10 +18,10 @@ provision:
   script: |
     #!/bin/bash
     set -eux -o pipefail
-    command -v newuidmap >/dev/null 2>&1 && exit 0
+    command -v slirp4netns >/dev/null 2>&1 && exit 0
     export DEBIAN_FRONTEND=noninteractive
-    apt-get install -y libseccomp2 libglib2.0-0 libsystemd0 libcap2 libyajl2 libgpgme11 libslirp0
-    apt-get install -y uidmap dbus-user-session iptables
+    apt-get install -y libseccomp2 libglib2.0-0 libsystemd0 libcap2 libyajl2 libgpgme11
+    apt-get install -y uidmap dbus-user-session iptables slirp4netns
 # user session
 - mode: user
   script: |

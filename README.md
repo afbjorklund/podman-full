@@ -104,10 +104,16 @@ systemctl --user enable --now dbus
 
 ### Networking
 
-Need to install `iptables`, for network namespaces.
+Need to install `slirp4netns`, for network namespaces.
 
 ```
-sudo apt-get install -y iptables
+exec: "slirp4netns": executable file not found in $PATH
+```
+
+It is available as a deb package, since the old podman.
+
+```
+sudo apt-get install -y iptables slirp4netns
 ```
 
 ## Testing
