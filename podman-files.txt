@@ -38,3 +38,4 @@ libexec/podman/conmon
 libexec/podman/netavark
 libexec/podman/quadlet
 libexec/podman/rootlessport
+libexec/podman/slirp4netns
