@@ -138,6 +138,10 @@ portForwards:
   hostSocket: "{{.Dir}}/sock/podman.sock"
 ```
 
+And run podman remotely:
+
+`podman.lima version`
+
 You can also run it locally:
 
 `lima podman version`
