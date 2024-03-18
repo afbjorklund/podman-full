@@ -1,7 +1,7 @@
 
 DOCKER = podman
 
-BRANCH = main
+BRANCH = v5.0
 
 VERSION = 5.0.0-rc7
 
