@@ -71,7 +71,7 @@ RUN : downgrade libsystemd ABI so it works in ubuntu too; \
   echo "deb http://deb.debian.org/debian buster main" >/etc/apt/sources.list.d/buster.list; \
   echo "deb http://deb.debian.org/debian buster-updates main" >>/etc/apt/sources.list.d/buster.list; \
   xx-apt-get update; \
-  version=$(apt list --all-versions libsystemd-dev | grep -v installed | awk '{ printf $2 }'); \
+  version=$(apt list --all-versions libsystemd-dev | grep oldoldstable | awk '{ printf $2 }'); \
   xx-apt-get install -y --allow-downgrades libsystemd-dev'='$version libsystemd0'='$version
 RUN git clone https://github.com/containers/crun.git /go/src/github.com/containers/crun
 WORKDIR /go/src/github.com/containers/crun
