@@ -29,7 +29,7 @@ ARG AARDVARK_DNS_VERSION=v1.12.1
 ARG GO_VERSION=1.21
 ARG RUST_VERSION=1.75
 
-FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.3.0 AS xx
+FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.4.0 AS xx
 
 
 FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-bullseye AS build-base-debian
