@@ -26,27 +26,35 @@ ARG CATATONIT_VERSION=v0.2.0
 ARG AARDVARK_DNS_VERSION=v1.12.1
 
 # Test deps
-ARG GO_VERSION=1.22
-ARG RUST_VERSION=1.80
+ARG GO_VERSION=1.23
+ARG RUST_VERSION=1.82
 
-FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.4.0 AS xx
+FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.5.0 AS xx
 
 
-FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-bullseye AS build-base-debian
+FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-bookworm AS build-base-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
-  apt-get install -y git pkg-config dpkg-dev
+RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+    git \
+    dpkg-dev
 ARG TARGETARCH
 # libbtrfs: for containerd
 # libseccomp: for runc
-RUN xx-apt-get update && \
-  xx-apt-get install -y binutils gcc libc6-dev libbtrfs-dev libseccomp-dev
+RUN xx-apt-get update -qq && xx-apt-get install -qq --no-install-recommends \
+    binutils \
+    gcc \
+    libc6-dev \
+    libbtrfs-dev \
+    libseccomp-dev \
+    pkg-config
+RUN git config --global advice.detachedHead false
 
-FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bullseye AS build-rust-debian
+FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bookworm AS build-rust-debian
 COPY --from=xx / /
 ARG TARGETARCH
 ADD rust-jobs.sh /usr/local/bin/rust-jobs
+RUN git config --global advice.detachedHead false
 
 FROM build-base-debian AS build-conmon
 ARG CONMON_VERSION
