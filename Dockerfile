@@ -35,13 +35,19 @@ FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.4.0 AS xx
 FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-bullseye AS build-base-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
-  apt-get install -y git pkg-config dpkg-dev
+RUN apt-get update && apt-get install -y \
+    git \
+    dpkg-dev
 ARG TARGETARCH
 # libbtrfs: for containerd
 # libseccomp: for runc
-RUN xx-apt-get update && \
-  xx-apt-get install -y binutils gcc libc6-dev libbtrfs-dev libseccomp-dev
+RUN xx-apt-get update && xx-apt-get install -y \
+    binutils \
+    gcc \
+    libc6-dev \
+    libbtrfs-dev \
+    libseccomp-dev \
+    pkg-config
 
 FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bullseye AS build-rust-debian
 COPY --from=xx / /
