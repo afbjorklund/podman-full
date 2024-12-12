@@ -48,11 +48,13 @@ RUN xx-apt-get update && xx-apt-get install -y \
     libbtrfs-dev \
     libseccomp-dev \
     pkg-config
+RUN git config --global advice.detachedHead false
 
 FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bullseye AS build-rust-debian
 COPY --from=xx / /
 ARG TARGETARCH
 ADD rust-jobs.sh /usr/local/bin/rust-jobs
+RUN git config --global advice.detachedHead false
 
 FROM build-base-debian AS build-conmon
 ARG CONMON_VERSION
