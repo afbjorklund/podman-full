@@ -37,7 +37,7 @@ $(ARCHIVE).tar:
 	ctr=`$(DOCKER) create podman-full :`; \
 	$(DOCKER) export $$ctr --output=$@ && \
 	$(DOCKER) rm $$ctr
-	-@test $(DOCKER) != "docker" || tar --delete .dockerenv --delete dev --delete etc --delete proc -f $@
+	-@test $(DOCKER) != "docker" || ( tar --delete .dockerenv --delete dev --delete etc --delete proc --delete sys <$@ >$@.$$$$ && mv $@.$$$$ $@ )
 
 $(ARCHIVE).tar.gz: $(ARCHIVE).tar
 	gzip -9 <$< >$@
