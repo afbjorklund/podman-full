@@ -160,7 +160,8 @@ ARG CRUN_VERSION
 COPY --from=build-crun /out/${TARGETARCH:-amd64}/* /out/bin/
 RUN echo "- crun: ${CRUN_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG NETAVARK_VERSION
-COPY --from=build-netavark /out/${TARGETARCH:-amd64}/* /out/
+COPY --from=build-netavark /out/${TARGETARCH:-amd64}/libexec/podman/* /out/libexec/podman/
+COPY --from=build-netavark /out/${TARGETARCH:-amd64}/lib/systemd/* /out/lib/systemd/
 RUN echo "- netavark: ${NETAVARK_VERSION}" >> /out/share/doc/podman-full/README.md
 ARG PASST_VERSION
 COPY --from=build-passt /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
