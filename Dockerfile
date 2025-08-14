@@ -76,8 +76,8 @@ RUN apt-get update && \
 RUN xx-apt-get update && \
   xx-apt-get install -y libsystemd-dev libcap-dev libyajl-dev
 RUN : downgrade libsystemd ABI so it works in ubuntu too; \
-  echo "deb http://deb.debian.org/debian buster main" >/etc/apt/sources.list.d/buster.list; \
-  echo "deb http://deb.debian.org/debian buster-updates main" >>/etc/apt/sources.list.d/buster.list; \
+  echo "deb http://archive.debian.org/debian buster main" >/etc/apt/sources.list.d/buster.list; \
+  echo "deb http://archive.debian.org/debian buster-updates main" >>/etc/apt/sources.list.d/buster.list; \
   xx-apt-get update; \
   version=$(apt list --all-versions libsystemd-dev | grep oldoldstable | awk '{ printf $2 }'); \
   xx-apt-get install -y --allow-downgrades libsystemd-dev'='$version libsystemd0'='$version
