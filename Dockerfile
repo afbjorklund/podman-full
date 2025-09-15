@@ -28,11 +28,12 @@ ARG AARDVARK_DNS_VERSION=v1.15.0
 # Test deps
 ARG GO_VERSION=1.24.4
 ARG RUST_VERSION=1.88
+ARG DEBIAN_VERSION=bookworm
 
 FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.6.1 AS xx
 
 
-FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-bookworm AS build-base-debian
+FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-${DEBIAN_VERSION} AS build-base-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
@@ -50,7 +51,7 @@ RUN xx-apt-get update -qq && xx-apt-get install -qq --no-install-recommends \
     pkg-config
 RUN git config --global advice.detachedHead false
 
-FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-bookworm AS build-rust-debian
+FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-${DEBIAN_VERSION} AS build-rust-debian
 COPY --from=xx / /
 ARG TARGETARCH
 ADD rust-jobs.sh /usr/local/bin/rust-jobs
