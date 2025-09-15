@@ -18,11 +18,14 @@ podman:
 versions:
 	$(DOCKER) run --rm -i docker.io/library/almalinux:8 sh < dnf-versions.sh | tee versions.txt
 
+DEBIAN_VERSION = $(shell grep "ARG DEBIAN_VERSION" Dockerfile | cut -f2 -d=)
+DEBIAN_IMAGE = debian:${DEBIAN_VERSION}
+
 GO_VERSION = $(shell grep "ARG GO_VERSION" Dockerfile | cut -f2 -d=)
-GO_IMAGE= $(shell grep FROM Dockerfile | grep GO_VERSION | cut -f3 -d' ' | GO_VERSION=$(GO_VERSION) envsubst)
+GO_IMAGE = $(shell grep FROM Dockerfile | grep GO_VERSION | cut -f3 -d' ' | GO_VERSION=$(GO_VERSION) DEBIAN_VERSION=$(DEBIAN_VERSION) envsubst)
 
 RUST_VERSION = $(shell grep "ARG RUST_VERSION" Dockerfile | cut -f2 -d=)
-RUST_IMAGE = $(shell grep FROM Dockerfile | grep RUST_VERSION | cut -f3 -d' ' | RUST_VERSION=$(RUST_VERSION) envsubst)
+RUST_IMAGE = $(shell grep FROM Dockerfile | grep RUST_VERSION | cut -f3 -d' ' | RUST_VERSION=$(RUST_VERSION) DEBIAN_VERSION=$(DEBIAN_VERSION) envsubst)
 
 images:
 	$(DOCKER) image inspect $(GO_IMAGE) >/dev/null || $(DOCKER) pull $(GO_IMAGE)
