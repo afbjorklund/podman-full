@@ -14,6 +14,10 @@ all: build archive
 podman:
 	git clone https://github.com/containers/podman.git --branch=$(BRANCH)
 
+.PHONY: versions
+versions:
+	$(DOCKER) run --rm -i docker.io/library/almalinux:8 sh < dnf-versions.sh | tee versions.txt
+
 GO_VERSION = $(shell grep "ARG GO_VERSION" Dockerfile | cut -f2 -d=)
 GO_IMAGE= $(shell grep FROM Dockerfile | grep GO_VERSION | cut -f3 -d' ' | GO_VERSION=$(GO_VERSION) envsubst)
 
