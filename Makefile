@@ -16,7 +16,7 @@ podman:
 
 .PHONY: versions
 versions:
-	$(DOCKER) run --rm -i fedora sh < dnf-versions.sh | tee versions.txt
+	$(DOCKER) run --rm -i docker.io/library/fedora sh < dnf-versions.sh | tee versions.txt
 
 DEBIAN_VERSION = $(shell grep "ARG DEBIAN_VERSION" Dockerfile | cut -f2 -d=)
 DEBIAN_IMAGE = debian:${DEBIAN_VERSION}
