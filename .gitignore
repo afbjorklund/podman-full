@@ -1,3 +1,7 @@
 podman/
 *.tar
 *.tar.gz
+arguments.txt
+argument-versions.txt
+packages.txt
+package-versions.txt
