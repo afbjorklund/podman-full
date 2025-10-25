@@ -15,8 +15,24 @@ podman:
 	git clone https://github.com/containers/podman.git --branch=$(BRANCH)
 
 .PHONY: versions
-versions:
+versions: package-versions.txt argument-versions.txt
+	@printf '\033[1m%.30s%65s\033[0m\n' $^
+	@colordiff --side-by-side $^
+
+versions.txt:
 	$(DOCKER) run --rm -i docker.io/library/fedora sh < dnf-versions.sh | tee versions.txt
+
+packages.txt: versions.txt
+	@grep -vi "^Available Packages" $< | grep -v release | sort -rV | awk '{print $$2,$$1}' | uniq -f 1 | awk '{print $$2,$$1}' | tee packages.txt
+
+package-versions.txt: packages.txt
+	@sort $< | ./packages.sh | sort >$@
+
+arguments.txt: Dockerfile
+	@(echo "ARG PODMAN_VERSION v$(VERSION)"; grep "^ARG" $< | grep "=" | tr "=" " " ) | tee arguments.txt
+
+argument-versions.txt: arguments.txt
+	@sort $< | ./arguments.sh | sort >$@
 
 DEBIAN_VERSION = $(shell grep "ARG DEBIAN_VERSION" Dockerfile | cut -f2 -d=)
 DEBIAN_IMAGE = debian:${DEBIAN_VERSION}
