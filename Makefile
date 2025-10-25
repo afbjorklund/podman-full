@@ -20,7 +20,7 @@ versions: package-versions.txt argument-versions.txt
 	@colordiff --side-by-side $^
 
 versions.txt:
-	$(DOCKER) run --rm -i docker.io/library/fedora sh < dnf-versions.sh | tee versions.txt
+	$(DOCKER) run --rm -i docker.io/library/fedora:42 sh < dnf-versions.sh | tee versions.txt
 
 packages.txt: versions.txt
 	@grep -vi "^Available Packages" $< | grep -v release | sort -rV | awk '{print $$2,$$1}' | uniq -f 1 | awk '{print $$2,$$1}' | tee packages.txt
