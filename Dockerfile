@@ -30,7 +30,7 @@ ARG GO_VERSION=1.24.9
 ARG RUST_VERSION=1.90.0
 ARG DEBIAN_VERSION=bookworm
 
-FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.6.1 AS xx
+FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.8.0 AS xx
 
 
 FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-${DEBIAN_VERSION} AS build-base-debian
