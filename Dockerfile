@@ -30,19 +30,21 @@ ARG GO_VERSION=1.24.6
 ARG RUST_VERSION=1.84.1
 ARG DEBIAN_VERSION=bullseye
 
-FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.4.0 AS xx
+FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.8.0 AS xx
 
 
 FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-${DEBIAN_VERSION} AS build-base-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y \
+RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+    make \
     git \
+    curl \
     dpkg-dev
 ARG TARGETARCH
 # libbtrfs: for containerd
 # libseccomp: for runc
-RUN xx-apt-get update && xx-apt-get install -y \
+RUN xx-apt-get update -qq && xx-apt-get install -qq --no-install-recommends \
     binutils \
     gcc \
     libc6-dev \
