@@ -37,7 +37,9 @@ FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-${DEBIAN_V
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+    make \
     git \
+    curl \
     dpkg-dev
 ARG TARGETARCH
 # libbtrfs: for containerd
