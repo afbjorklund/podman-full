@@ -27,6 +27,14 @@ Installed files for `nerdctl-full`, excluding documentation:
 
 ----
 
+## Branches
+
+Branch | Podman | Target                  | Source
+------ | ------ | ----------------------- | ---------------
+four   | v4.9   | Debian 11, Ubuntu 22.04 | Fedora 28 (el8)
+five   | v5.6   | Debian 12, Ubuntu 24.04 | Fedora 42
+next   | v6.0   | Debian 13, Ubuntu 25.04 | Fedora Rawhide
+
 ## Building
 
 The default `make` target will build an image, and export it.
