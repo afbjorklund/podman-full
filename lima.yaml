@@ -31,7 +31,4 @@ provision:
     systemctl --user start dbus
     mkdir -p $HOME/.config/containers
     cat <<EOF >$HOME/.config/containers/containers.conf
-    [network]
-    network_backend = "netavark"
-    network_config_dir = "$HOME/.local/share/containers/storage/networks"
     EOF
