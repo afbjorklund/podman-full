@@ -1,21 +1,13 @@
 Available packages
-aardvark-dns.x86_64 2:1.14.0-1.fc42            fedora
-aardvark-dns.x86_64 2:1.16.0-1.fc42            updates
-catatonit.x86_64    0.2.1-1.fc42               fedora
-conmon.x86_64       2:2.1.13-1.fc42            fedora
-crun.x86_64         1.20-2.fc42                fedora
-crun.x86_64         1.24-1.fc42                updates
-netavark.x86_64     2:1.14.1-1.fc42            fedora
-netavark.x86_64     2:1.16.1-1.fc42            updates
-passt.x86_64        0^20250320.g32f6212-2.fc42 fedora
-passt.x86_64        0^20250919.g623dbf6-1.fc42 updates
+aardvark-dns.x86_64 2:1.17.0-1.fc44            rawhide
+catatonit.x86_64    0.2.1-3.fc43               rawhide
+conmon.x86_64       2:2.1.13-2.fc43            rawhide
+crun.x86_64         1.25.1-1.fc44              rawhide
+netavark.x86_64     2:1.17.0-1.fc44            rawhide
+passt.x86_64        0^20250919.g623dbf6-1.fc44 rawhide
 Available packages
-golang.x86_64 1.24.1-1.fc42  fedora
-golang.x86_64 1.24.9-1.fc42  updates
-podman.x86_64 5:5.4.1-1.fc42 fedora
-podman.x86_64 5:5.6.2-1.fc42 updates
-rust.x86_64   1.85.1-1.fc42  fedora
-rust.x86_64   1.90.0-1.fc42  updates
+golang.x86_64 1.25.4-1.fc44  rawhide
+podman.x86_64 5:5.7.0-1.fc44 rawhide
+rust.x86_64   1.91.1-1.fc44  rawhide
 Available packages
-fedora-release-common.noarch 42-25 fedora
-fedora-release-common.noarch 42-30 updates
+fedora-release-common.noarch 44-0.5 rawhide
