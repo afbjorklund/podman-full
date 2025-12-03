@@ -28,7 +28,7 @@ ARG AARDVARK_DNS_VERSION=v1.17.0
 # Test deps
 ARG GO_VERSION=1.25.4
 ARG RUST_VERSION=1.91.1
-ARG DEBIAN_VERSION=bookworm
+ARG DEBIAN_VERSION=trixie
 
 FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.8.0 AS xx
 
@@ -78,12 +78,6 @@ RUN apt-get update && \
   apt-get install -y autoconf automake libtool
 RUN xx-apt-get update && \
   xx-apt-get install -y libsystemd-dev libcap-dev libyajl-dev
-RUN : downgrade libsystemd ABI so it works in ubuntu too; \
-  echo "deb http://archive.debian.org/debian buster main" >/etc/apt/sources.list.d/buster.list; \
-  echo "deb http://archive.debian.org/debian buster-updates main" >>/etc/apt/sources.list.d/buster.list; \
-  xx-apt-get update; \
-  version=$(apt list --all-versions libsystemd-dev | grep oldoldstable | awk '{ printf $2"\n" }' | sort -rV | head -1); \
-  xx-apt-get install -y --allow-downgrades libsystemd-dev'='$version libsystemd0'='$version
 RUN git clone https://github.com/containers/crun.git /go/src/github.com/containers/crun
 WORKDIR /go/src/github.com/containers/crun
 RUN git checkout ${CRUN_VERSION} && \
