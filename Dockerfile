@@ -16,7 +16,7 @@
 # -----------------------------------------------------------------------------
 
 # Basic deps
-ARG CONMON_VERSION=v2.2.0
+ARG CONMON_VERSION=v2.2.1
 ARG CRUN_VERSION=1.26
 ARG NETAVARK_VERSION=v1.17.2
 
@@ -26,8 +26,8 @@ ARG CATATONIT_VERSION=v0.2.1
 ARG AARDVARK_DNS_VERSION=v1.17.0
 
 # Test deps
-ARG GO_VERSION=1.26rc3
-ARG RUST_VERSION=1.93.1
+ARG GO_VERSION=1.26.1
+ARG RUST_VERSION=1.94.0
 ARG DEBIAN_VERSION=trixie
 
 FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.8.0 AS xx
