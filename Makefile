@@ -3,7 +3,7 @@ DOCKER = podman
 
 BRANCH = v5.8
 
-VERSION = 5.8.2
+VERSION = 5.8.3
 
 TARGETARCH ?= $(shell ./host-arch.sh)
 
