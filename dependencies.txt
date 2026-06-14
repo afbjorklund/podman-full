@@ -2,5 +2,5 @@ libseccomp2
 libglib2.0-0
 libsystemd0
 libcap2
-libyajl2
+libjson-c5
 libgpgme11

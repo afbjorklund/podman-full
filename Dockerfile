@@ -77,7 +77,7 @@ ARG TARGETARCH
 RUN apt-get update && \
   apt-get install -y autoconf automake libtool
 RUN xx-apt-get update && \
-  xx-apt-get install -y libsystemd-dev libcap-dev libyajl-dev
+  xx-apt-get install -y libsystemd-dev libcap-dev libjson-c-dev
 RUN git clone https://github.com/containers/crun.git /go/src/github.com/containers/crun
 WORKDIR /go/src/github.com/containers/crun
 RUN git checkout ${CRUN_VERSION} && \
