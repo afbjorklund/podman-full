@@ -7,6 +7,8 @@ VERSION = 6.0.0
 
 TARGETARCH ?= $(shell ./host-arch.sh)
 
+TAR = tar
+
 ARCHIVE = podman-full-$(VERSION)-linux-$(TARGETARCH)
 
 all: build archive
@@ -60,7 +62,7 @@ $(ARCHIVE).tar:
 	ctr=`$(DOCKER) create podman-full :`; \
 	$(DOCKER) export $$ctr --output=$@ && \
 	$(DOCKER) rm $$ctr
-	-@test $(DOCKER) != "docker" || ( tar --delete .dockerenv --delete dev --delete etc --delete proc --delete sys <$@ >$@.$$$$ && mv $@.$$$$ $@ )
+	-@test $(DOCKER) != "docker" || ( $(TAR) --delete .dockerenv --delete dev --delete etc --delete proc --delete sys <$@ >$@.$$$$ && mv $@.$$$$ $@ )
 
 $(ARCHIVE).tar.gz: $(ARCHIVE).tar
 	gzip -9 <$< >$@
