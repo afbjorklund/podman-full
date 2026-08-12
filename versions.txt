@@ -1,13 +1,13 @@
 Available packages
-aardvark-dns.x86_64 2:2.0.0-1.fc45             rawhide
-catatonit.x86_64    0.2.1-5.fc44               rawhide
+aardvark-dns.x86_64 2:2.0.0-2.fc45             rawhide
+catatonit.x86_64    0.2.1-6.fc45               rawhide
 conmon.x86_64       2:2.2.1-2.fc45             rawhide
-crun.x86_64         1.28-1.fc45                rawhide
-netavark.x86_64     2:2.0.0-1.fc45             rawhide
-passt.x86_64        0^20260611.ga9c61ff-1.fc45 rawhide
+crun.x86_64         1.29-1.fc45                rawhide
+netavark.x86_64     2:2.0.0-3.fc45             rawhide
+passt.x86_64        0^20260728.gf8df3f1-2.fc45 rawhide
 Available packages
-golang.x86_64 1.26.4-2.fc45  rawhide
-podman.x86_64 5:6.0.0-1.fc45 rawhide
-rust.x86_64   1.96.0-4.fc45  rawhide
+golang.x86_64 1.27~rc2-2.fc45    rawhide
+podman.x86_64 5:6.1.0~rc1-1.fc45 rawhide
+rust.x86_64   1.97.1-2.fc45      rawhide
 Available packages
-fedora-release-common.noarch 45-0.8 rawhide
+fedora-release-common.noarch 45-0.9 rawhide
