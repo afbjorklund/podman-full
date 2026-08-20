@@ -169,6 +169,8 @@ RUN echo "- catatonit: ${CATATONIT_VERSION}" >> /out/share/doc/podman-full/READM
 ARG AARDVARK_DNS_VERSION
 COPY --from=build-aardvark-dns /out/${TARGETARCH:-amd64}/* /out/libexec/podman/
 RUN echo "- aardvark-dns: ${AARDVARK_DNS_VERSION}" >> /out/share/doc/podman-full/README.md
+RUN (cd /out && find ! -type d | sort | xargs sha256sum > /tmp/SHA256SUMS ) && \
+  mv /tmp/SHA256SUMS /out/share/doc/podman-full/SHA256SUMS
 
 RUN chown -R 0:0 /out
 
