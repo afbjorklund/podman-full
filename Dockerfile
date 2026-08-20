@@ -30,27 +30,27 @@ ARG GO_VERSION=1.27rc2
 ARG RUST_VERSION=1.97.1
 ARG DEBIAN_VERSION=trixie
 
-FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.8.0 AS xx
+FROM --platform=$BUILDPLATFORM docker.io/tonistiigi/xx:1.9.0 AS xx
 
 
 FROM --platform=$BUILDPLATFORM docker.io/library/golang:${GO_VERSION}-${DEBIAN_VERSION} AS build-base-debian
 COPY --from=xx / /
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
-    make \
-    git \
-    curl \
-    dpkg-dev
+  make \
+  git \
+  curl \
+  dpkg-dev
 ARG TARGETARCH
 # libbtrfs: for containerd
 # libseccomp: for runc
 RUN xx-apt-get update -qq && xx-apt-get install -qq --no-install-recommends \
-    binutils \
-    gcc \
-    libc6-dev \
-    libbtrfs-dev \
-    libseccomp-dev \
-    pkg-config
+  binutils \
+  gcc \
+  libc6-dev \
+  libbtrfs-dev \
+  libseccomp-dev \
+  pkg-config
 RUN git config --global advice.detachedHead false
 
 FROM --platform=$BUILDPLATFORM docker.io/library/rust:${RUST_VERSION}-${DEBIAN_VERSION} AS build-rust-debian
