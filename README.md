@@ -33,7 +33,7 @@ Branch | Podman | Target                  | Source
 ------ | ------ | ----------------------- | ---------------
 four   | v4.9   | Debian 11, Ubuntu 22.04 | Fedora 28 (el8)
 five   | v5.6   | Debian 12, Ubuntu 24.04 | Fedora 34 (el9)
-next   | v6.0   | Debian 13, Ubuntu 26.04 | Fedora 40 (el10)
+next   | v6.1   | Debian 13, Ubuntu 26.04 | Fedora 40 (el10)
 
 ## Building
 
